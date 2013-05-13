@@ -114,6 +114,12 @@
 <p><a href="https://travis-ci.org/thomaswelton/bower-scroll"><img src="https://travis-ci.org/thomaswelton/bower-scroll.png" alt="Build Status"></a>
 <a href="https://david-dm.org/thomaswelton/bower-scroll"><img src="https://david-dm.org/thomaswelton/bower-scroll.png" alt="Dependency Status"></a></p>
 <p>Javascript component to add a custom styled scroll bar to an element</p>
+<h2>Installation</h2>
+<p><code>bower install git@github.com:thomaswelton/bower-scroll.git --save-dev</code></p>
+<h2>Usage</h2>
+<p>Define a new coffee script module and initialize the overflow elements</p>
+<pre><code class="lang-coffee">define [&#39;Scroll&#39;, &#39;mootools&#39;], (Scroll) -&gt;
+    new Scroll(longContent) for longContent in $$(&#39;.superScroll&#39;)</code></pre>
 <p>For best results add the class no-js to you <code>&lt;html&gt;</code> tag and remove it using javascript before you load your css.</p>
 <pre><code class="lang-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot; class=&quot;no-js&quot;&gt;

@@ -40,11 +40,11 @@
       }
 
       SuperScroll.prototype.showScroll = function() {
-        return this.scrollBar.fade('in');
+        return this.scrollBar.removeClass('hidden');
       };
 
       SuperScroll.prototype.hideScroll = function() {
-        return this.scrollBar.fade('out');
+        return this.scrollBar.addClass('hidden');
       };
 
       SuperScroll.prototype.onResize = function() {
@@ -87,7 +87,7 @@
         var scrollBar;
 
         scrollBar = new Element('div', {
-          "class": 'scrollBar',
+          "class": 'scrollBar hidden',
           styles: {
             position: "absolute",
             height: "100%",
@@ -96,10 +96,6 @@
             cursor: "pointer"
           }
         }).grab(this.createHandle()).inject(this.container);
-        scrollBar.set('tween', {
-          duration: 750
-        });
-        scrollBar.fade('hide');
         return scrollBar;
       };
 

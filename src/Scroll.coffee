@@ -28,10 +28,10 @@ define ['EventEmitter'], (EventEmitter) ->
 			@showScroll() if @scrollContent.getHeight() > @container.getHeight()
 			
 		showScroll: () =>
-			@scrollBar.fade 'in'
+			@scrollBar.removeClass 'hidden'
 
 		hideScroll: () =>
-			@scrollBar.fade 'out'
+			@scrollBar.addClass 'hidden'
 
 		onResize: () =>
 			if @resizeTimeout?
@@ -67,7 +67,7 @@ define ['EventEmitter'], (EventEmitter) ->
 		addScrollBar: () ->
 			## Create and inject the scrollbar
 			scrollBar = new Element('div',
-				class : 'scrollBar', 
+				class : 'scrollBar hidden', 
 				styles :
 					position : "absolute",
 					height : "100%",
@@ -75,10 +75,6 @@ define ['EventEmitter'], (EventEmitter) ->
 					right: "0px",
 					cursor: "pointer"
 			).grab(@createHandle()).inject @container
-
-			##Upon creation hide the scroll bar then fade it in.
-			scrollBar.set 'tween', {duration: 750}
-			scrollBar.fade 'hide'
 
 			## Return the scroll bar
 			scrollBar	
