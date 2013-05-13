@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<title>Bower Scroll Demo</title>
+
+	<script>document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'js')</script>
+
+	<link rel="stylesheet" href="../dist/scroll.css">
+	<script data-main="main" src="../components/requirejs/require.js"></script>
+	<script>
+		requirejs.config({
+			baseUrl: "",
+			paths:{
+				'domReady' : '../components/requirejs-domready/domReady',
+				'Scroll' : '../src/Scroll',
+				'EventEmitter': '../components/EventEmitter/dist/EventEmitter'
+			}
+		});
+	</script>
+
+	<style>
+		.superScroll{
+			height:200px;
+			font-size:30px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Scroll</h1>
+
+	<div class="superScroll">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, earum tenetur non eius doloribus dolores consequuntur minima eum accusamus temporibus ipsam quam facilis quia recusandae laudantium cupiditate iure? In, quisquam?
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, incidunt molestias itaque laudantium sint eos illum nisi quaerat quod totam! Minima quaerat dolores corrupti dicta similique vero harum aperiam nam.
+	</div>
+</body>
+</html>

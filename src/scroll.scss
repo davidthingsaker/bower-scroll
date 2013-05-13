@@ -1,0 +1,26 @@
+.superScroll{
+    html.no-js &{
+        overflow:auto;
+    }
+
+    html.js &{
+        overflow:hidden;
+    }
+
+    width:100%;
+    max-height:100%;
+
+    .scrollBar{
+        width:6px;
+        height:100%;
+        position:absolute;
+        top:0; right:0;
+    }
+    
+    .handle{
+        height:50px;
+        $color: green;
+        background:rgba(red($color),green($color),blue($color),0.75);
+        border:1px solid #ccccc;
+    }
+}
