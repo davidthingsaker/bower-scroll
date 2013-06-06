@@ -48,7 +48,7 @@ module.exports = (grunt) =>
 		compass:
 			dist:
 				options:
-					config: 'src/config.rb'
+					config: 'config.rb'
 					noLineComments: false
 					outputStyle: 'expanded'
 
