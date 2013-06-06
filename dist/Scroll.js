@@ -1,12 +1,10 @@
-
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define('Scroll',['EventEmitter'], function(EventEmitter) {
+  define(['EventEmitter'], function(EventEmitter) {
     var SuperScroll;
-
     return SuperScroll = (function(_super) {
       __extends(SuperScroll, _super);
 
@@ -58,7 +56,6 @@
 
       SuperScroll.prototype.throttleResize = function() {
         var _this = this;
-
         return setTimeout(function() {
           _this.maxScroll = Math.max(0, _this.scrollContent.getHeight() - _this.container.getHeight());
           _this.maxHandleTop = _this.scrollBar.getHeight() - _this.handle.getHeight();
@@ -85,7 +82,6 @@
 
       SuperScroll.prototype.addScrollBar = function() {
         var scrollBar;
-
         scrollBar = new Element('div', {
           "class": 'scrollBar hidden',
           styles: {
@@ -113,7 +109,6 @@
 
       SuperScroll.prototype.trackScroll = function(event) {
         var currentMargin, deltaY, newScroll;
-
         deltaY = event.wheel * 20;
         currentMargin = -1 * this.scrollContent.getStyle('margin-top').toInt();
         newScroll = (currentMargin - deltaY).limit(0, this.maxScroll);
@@ -125,7 +120,6 @@
 
       SuperScroll.prototype.trackHandle = function(event) {
         var _this = this;
-
         event.stop();
         this.clientY = event.client.y;
         window.addEvent('mousemove', this.handleMouseMove);
@@ -136,7 +130,6 @@
 
       SuperScroll.prototype.trackClick = function(event) {
         var barY, clickedY, newTop;
-
         if (event.target.hasClass('scrollBar')) {
           clickedY = event.client.y;
           barY = this.scrollBar.getPosition().y - window.getScroll().y;
@@ -147,7 +140,6 @@
 
       SuperScroll.prototype.handleMouseMove = function(event) {
         var deltaY, handleTop, newTop;
-
         deltaY = this.clientY - event.client.y;
         this.clientY = event.client.y;
         handleTop = this.handle.getStyle('top').toInt();
@@ -157,7 +149,6 @@
 
       SuperScroll.prototype.scrollPercent = function(percent) {
         var decimal;
-
         decimal = percent.limit(0, 1);
         this.scrollPercentDecimal = percent;
         this.handle.setStyle('top', this.maxHandleTop * decimal);
