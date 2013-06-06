@@ -1,7 +1,6 @@
 (function() {
   require(['Scroll', 'mootools', 'domReady!'], function(SuperScroll) {
     var longContent, _i, _len, _ref, _results;
-
     console.log('main init');
     _ref = $$('.superScroll');
     _results = [];
