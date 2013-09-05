@@ -38,7 +38,8 @@
       }
 
       SuperScroll.prototype.showScroll = function() {
-        return this.scrollBar.removeClass('hidden');
+        this.scrollBar.removeClass('hidden');
+        return this.maxHandleTop = this.scrollBar.getHeight() - this.handle.getHeight();
       };
 
       SuperScroll.prototype.hideScroll = function() {

@@ -29,6 +29,7 @@ define ['EventEmitter'], (EventEmitter) ->
 			
 		showScroll: () =>
 			@scrollBar.removeClass 'hidden'
+			@maxHandleTop = this.scrollBar.getHeight() - this.handle.getHeight();
 
 		hideScroll: () =>
 			@scrollBar.addClass 'hidden'
