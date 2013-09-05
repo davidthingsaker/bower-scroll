@@ -2,6 +2,7 @@ bower-scroll
 ============
 [![Build Status](https://travis-ci.org/thomaswelton/bower-scroll.png)](https://travis-ci.org/thomaswelton/bower-scroll)
 [![Dependency Status](https://david-dm.org/thomaswelton/bower-scroll.png)](https://david-dm.org/thomaswelton/bower-scroll)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/thomaswelton/bower-scroll/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 Javascript component to add a custom styled scroll bar to an element
 
