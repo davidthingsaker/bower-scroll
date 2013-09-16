@@ -3,12 +3,13 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['EventEmitter'], function(EventEmitter) {
+  define(['EventEmitter', 'rAF'], function(EventEmitter) {
     var SuperScroll;
     return SuperScroll = (function(_super) {
       __extends(SuperScroll, _super);
 
       function SuperScroll(container) {
+        var _this = this;
         this.container = container;
         this.scrollTo = __bind(this.scrollTo, this);
         this.scrollPercent = __bind(this.scrollPercent, this);
@@ -32,6 +33,10 @@
         container.addEvent('mousedown:relay(".handle")', this.trackHandle);
         container.addEvent('click:relay(".scrollBar")', this.trackClick);
         document.window.addEvent('resize', this.onResize);
+        container.addEvent('touchmove:relay(".scroll-content")', this.trackScroll);
+        container.addEvent('touchstart:relay(".scroll-content")', function() {
+          return _this.pageY = event.changedTouches[0].pageY;
+        });
         if (this.scrollContent.getHeight() > this.container.getHeight()) {
           this.showScroll();
         }
@@ -110,7 +115,11 @@
 
       SuperScroll.prototype.trackScroll = function(event) {
         var currentMargin, deltaY, newScroll;
-        deltaY = event.wheel * 20;
+        if (event.changedTouches != null) {
+          deltaY = -1 * (this.pageY - event.changedTouches[0].pageY);
+        } else {
+          deltaY = event.wheel * 20;
+        }
         currentMargin = -1 * this.scrollContent.getStyle('margin-top').toInt();
         newScroll = (currentMargin - deltaY).limit(0, this.maxScroll);
         if (newScroll < this.maxScroll && newScroll > 0) {
@@ -149,11 +158,17 @@
       };
 
       SuperScroll.prototype.scrollPercent = function(percent) {
-        var decimal;
-        decimal = percent.limit(0, 1);
-        this.scrollPercentDecimal = percent;
-        this.handle.setStyle('top', this.maxHandleTop * decimal);
-        return this.scrollContent.setStyle('margin-top', -1 * (this.maxScroll * decimal));
+        var _this = this;
+        if (this.rafId != null) {
+          cancelAnimationFrame(this.rafId);
+        }
+        return this.rafId = requestAnimationFrame(function() {
+          var decimal;
+          decimal = percent.limit(0, 1);
+          _this.scrollPercentDecimal = percent;
+          _this.handle.setStyle('top', _this.maxHandleTop * decimal);
+          return _this.scrollContent.setStyle('margin-top', -1 * (_this.maxScroll * decimal));
+        });
       };
 
       SuperScroll.prototype.scrollTo = function(x, y) {

@@ -1,4 +1,4 @@
-define ['EventEmitter'], (EventEmitter) ->
+define ['EventEmitter', 'rAF'], (EventEmitter) ->
 	## SuperScroll Scroll
 	class SuperScroll extends EventEmitter
 		constructor: (@container) ->
@@ -23,6 +23,14 @@ define ['EventEmitter'], (EventEmitter) ->
 			container.addEvent('mousedown:relay(".handle")',@trackHandle)
 			container.addEvent('click:relay(".scrollBar")',@trackClick)
 			document.window.addEvent('resize',@onResize)
+
+
+
+			container.addEvent('touchmove:relay(".scroll-content")', @trackScroll)
+
+			container.addEvent 'touchstart:relay(".scroll-content")', () =>
+				@pageY = event.changedTouches[0].pageY
+
 
 			##Only show the bar if needed
 			@showScroll() if @scrollContent.getHeight() > @container.getHeight()
@@ -91,11 +99,16 @@ define ['EventEmitter'], (EventEmitter) ->
 			)
 			
 		trackScroll: (event) =>
-			deltaY = event.wheel * 20;
+
+			if event.changedTouches?
+				deltaY = -1 * (@pageY - event.changedTouches[0].pageY)
+			else
+				deltaY = event.wheel * 20
+
 			currentMargin = -1 * @scrollContent.getStyle('margin-top').toInt() 
 
 			newScroll = (currentMargin - deltaY).limit(0,@maxScroll);
-			
+
 			if newScroll < @maxScroll and newScroll > 0
 				event.stop() 
 				@scrollPercent newScroll / @maxScroll
@@ -126,13 +139,17 @@ define ['EventEmitter'], (EventEmitter) ->
 			@scrollPercent newTop / @maxHandleTop
 		
 		scrollPercent: (percent) =>
-			decimal = percent.limit(0,1);
+			if @rafId? 
+				cancelAnimationFrame @rafId
 
-			@scrollPercentDecimal = percent
-			## Set scroll handle position
-			@handle.setStyle('top', @maxHandleTop * decimal)
-			## Set Scroll
-			@scrollContent.setStyle('margin-top', -1 * (@maxScroll * decimal))
+			@rafId = requestAnimationFrame () =>
+				decimal = percent.limit(0,1);
+
+				@scrollPercentDecimal = percent
+				## Set scroll handle position
+				@handle.setStyle('top', @maxHandleTop * decimal)
+				## Set Scroll
+				@scrollContent.setStyle('margin-top', -1 * (@maxScroll * decimal))
 
 		scrollTo: (x,y) =>
 			@scrollPercent y / @maxScroll
